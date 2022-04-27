@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Terms and Conditions</title>
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  overflow: hidden;
+  
+  background-image: linear-gradient(-90deg, #d38312,#a83279);
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color:white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color:white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color:black;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-image: linear-gradient(-90deg, #d38312,#a83279);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color:white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: black;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.login a{
+    float: right;
+    
+}
+
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;
+}
+
+
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+body{
+    background-color: #000016ed;
+    color: white;
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+  <a href="/"><i class="fa fa-trophy" style="font: size 24px;"></i> Stadium Updates</a>
+  <div class="dropdown">
+    <button class="dropbtn"><i class="fa fa-fw fa-envelope"></i> Contact Us
+    </button>
+    <div class="dropdown-content">
+      <a onclick="ccn()">Customer Care numbers</a>
+      <a onclick="tcl()">For Ticket cancellation</a>
+      <a onclick="queries()">For Other Queries</a>
+    </div>
+</div> 
+<div class="dropdown">
+
+    <button class="dropbtn"><i>&#9432;</i> About</button>
+    <div class="dropdown-content">
+        <a href="/privacypolicy">Privacy Policy</a>
+        <a href="/t&c/">Terms & Conditions</a>
+    </div> 
+  </div>
+    <div class="login" >
+      {%if user.is_authenticated %}
+      <a href="/search/"><i class="fa fa-fw fa-user"></i>Book Now</a>
+      <a href="/logout/"><i class="fa fa-fw fa-user"></i>Logout</a>
+    {%else%}
+      <a href="/"><i class="fa fa-fw fa-user"></i>Admin Login</a>
+      <a href="/login/"><i class="fa fa-fw fa-user"></i>Login</a>
+      <a href="/register1/"><i>&reg;</i> Register</a>
+      <a href="/login/"><i class="fa fa-fw fa-user"></i>Book Now</a>
+      {%endif%}
+    </div>
+</div>
+
+
+<h1><strong>Terms and Conditions</strong></h1>
+<h3>SPORTS AUTHORITY OF INDIA</h3>
+<p>General Terms and Conditions for booking of SAI Stadia, and other premises for Non-Sporting events</p>
+<p>1. No temporary structure would be created in the stadia premises, including grounds/field of play (court) without prior permission and approval of the
+  Stadia Administrator. No digging is allowed.</p>
+<p>2. Only removable markings /tapes on the grounds/field of play (court) are permissible with the approval of the concerned Administrator. </p>
+<p>3. The organizers will be responsible for any accident or mishap including loss of life during the course of booking by the Organiser. SAI will not be responsible for any such accident. </p>
+<p>4. During booking period, cleaning and scavenging of areas booked/being utilized, will be the responsibility of the organizer and the same will be handed over to SAI in a neat and clean state after the program (if the cleaning is not included in the tariff). The organizers will ensure that the venue shall be maintained clean during and after the event. In case it is not found clean within 24hrs. after the completion of the event, SAI will get the complex cleaned by the cleaning agency deployed by SAI and the expenditure incurred will be recovered from the Security Deposit of the organizers.</p>
+<p>5. No eatable can be served in the main arena (FOP & the seating area). Only pre-cooked / packaged food/snacks can be served in the catering point inside the built-up area of the stadium. Use of open/gas cooking may be allowed only in non-built-up and non-green areas which will be specially identified for the purpose by Stadia Administrator. It will be the responsibility of the organizer to ensure that any eatables brought inside the stadium complex are free from risks which affect the Health, Safety, Security, etc., </p>
+<p>6. No pets are permitted inside the Complex.</p>
+<p>7.Smoking and drinking are strictly prohibited within the stadium premises, and it will be the responsibility of organizer to ensure compliance. Failure on part of event organizer to enforce this rule will attract a minimum penalty of Rs.5, 000/- which would be deducted from the Security Deposit. However, serving of liquor will be permissible by the organiser only in area designated by theorganiser for commercial sports events and non-sports events.</p>
+<p>8. The organizer of any event must comply with the municipal and other by-laws, rules & regulations. No event will be allowed to take place without NOCs/licences from (i) Delhi Police (ii) Traffic Police (iii) Delhi Fire Service (iv) Excise Department, or any other department as required by law.</p>
+<p>9. The organizer of the event shall get the stadium insured for the period of the booking. The insurance should cover complete stadium premises and the public. The value of such insurance cover will be informed by the Stadia Administrator.</p>
+<p>10. It will be responsibility of the Organizer to arrange for crowd control, ushering and fire control during the event.</p>
+<p>11. Medical facility for any contingency must be ensured by the organizer. This should include Medical Kit, First Aid-Box, qualified personnel and ambulance. These arrangements should be in place during he period of booking.</p>
+<p>12. No vehicles will be allowed beyond parking areas.</p>
+<p>13. No material, fittings, posters, etc. will be pasted or nailed on the stadium walls. The walls are covered with sound-proofing material which is fragile.</p>
+<p>14. No material, including nails, which can cause damage to the walls / FOP / floor, will be used inside the arena/stadium.</p>
+<p>15. It will be the responsibility of the organizer to ensure that all items brought inside the stadium premises are free from any type of Health, Safety, Security, Fire and other hazards.</p>
+<p>16. No fire works or explosives are permitted in the complex.</p>
+<p>17. SAI will not be responsible for any losses due to disturbance/failure/breakdown of electricity, air-conditioning, other installation, water supply, fire, seepage of water through the roof or natural calamities like storm, flooding etc.</p>
+<p>18. The organizer will submit a plan containing all the details of the additional structures like stage/seating arrangement etc. before the preparation of the event/programme.</p>
+<p>19. During the event, proper signage should be displayed in and around the stadium premises to guide the public and avoid confusion. The same will be fixed and shown one day before the event to the Administrator or his representatives.</p>
+<p>20. The banners or other display material must be removed by the organizer immediately after completion of event/programme or within the period f booking failing which, deductions will be made from the security deposit for removal of the banners by special labor employed for the purpose.</p>
+<p>21. Any additional electricity point to be provided with the approval of the Administrator at no cost to SAI. All points from which electricity is Electricity charges will be charged as per actual consumption + service tax as applicable(to be calculated based on existing tariff).</p>
+<p>22. Booking Cancellation Charges:</p>
+<table> 
+<li>90 days before the date of event.	Nil</li>
+<li>89th day to 45th day prior to the date of event,	25% of the total booking amount</li>
+<li> 44th day to 15th day prior to the date of event,	50% of the total booking amount</li>
+<li> 14th day to the 7th day prior to the date of event	100% of the total booking amount</li>
+<li> 6th day to the of the event.	100% of the total booking amount</li>
+</table>
+Under extra ordinary circumstances, the cancellation of booking will be examined on case to case basis by the competent authority for partial or full waiver of cancellation charges. All such cases shall have the approval of Governing Body of SAI.
+Processing fee will be fortified in all cases of cancellation of sports & non  sports events.
+<p>23. SAI will be given complimentary passes /tickets equivalent to 5% seats of each category.</p>
+<p>24. Estimates for any loss/damage to SAI infrastructure/fittings/ installations during the booking period will be prepared by the CPWD/ Maintenance agency, and the same would be recovered from the Organiser.</p>
+<p>25. SAI shall allot to organizers parking space inside the stadium for limited vehicles only during booking period.</p>
+<p>26. Banner / Poster and publicity of the programme are not permitted till the confirmation of booking.</p>
+<p>27. Sale of tickets of any of the programme will start only after confirmation of booking of the stadium and required permission from Police and other organizations.</p>
+<p>28. SAI will provide security as per its normal security deployment. However, for any additional requirement in the light of magnitude of the programme to be held at the area booked, the organizers may request SAI for the deployment of extra security guards which will be arranged by SAI through the agency providing security in the campus and the payment for such additional security would be made by organizers as per prevailing DGR norms.</p>
+<p>29. SAI will provide free water supply including drinking water, other than bottled water as normally available in the stadium.</p>
+<p>30. An inventory should be prepared of the items brought inside the premises by the Organiser and be got verified by the Security Supervisor of the Security Agency deployed. The gate pass for taking the items out of the premises should be issued by the Administrator or his representative after the same is again varified by the Security Supervisor.</p>
+<p>31. The Administrator may implement any other terms/conditions and guidelines in public interest during booking period, the same will be binding on the organizer.</p>
+<p>32. The Organiser is required to take any compulsory licensing for the copy right works by the organizers during the events failing which, the consequences will be responsibility of the organizers.</p>
+<p>33. In case any dispute arises, the same will be settled by the Arbitrator, appointed by Director General , SAI.</p>
+<p>34. The Courts of New Delhi will have the exclusive jusridiction to try the legal disputes, if any.</p>
+<p>35. The Organiser should ensure that the safety and integrity of the Field of Play area during the booking period.</p>
+<p>36. SAI reserves the right to refuse/cancel the booking without assigning any reason.</p>
+<p>37. The charges are subject to revision from time to time. It will be binding on the Organiser to pay the revised tariff from the day it is made applicable.</p>
+<p>38. 25% Extra Amount on base rent will be charged during the days on which alcohol is served..</p>
+<p> 39. Security Money deposited for booking will be released only after fulfillment of contractual obligations.</p>
+<p> 40. Payment can be made Online/Offline within 10 days.The Offline Payment should be made only by Demand Draft(DD) within 10 days from the confirmation.</p>
+<p> Only for JNS, Open Space Near Gate No 2,Open Space Near Gate No 6,Open Space Near Gate No 7 to 9 </p>
+<p>41. In addition to Gate No.2, the organizers have to book the parking are also.</p>
+<p>42. The organizer have also to ensure that no visitors vehicle will be parked on road sides resulting into inconvenience to the public specially the residence of PV Hostel.</p>
+<p>43. The organizer has to give undertaking with regards to the following of Supreme Court laid down norms for Noise Pollution.</p>
+<p>44. The organizers have to give an undertaking with regard to maintenance of Noise level within the permitted limit.</p>
+<p>45. A separate security money amounting to Rs. 2,00,000/- will be taken and the same will be forfeited in case the organizer fail to maintain the noise level or unauthorized parking of vehicles on the road side.</p>
+
+<script>
+    function ccn() {
+      alert(" Customer care numbers - 0763-6612461, 0763-4090840")
+    }
+
+    function tcl(){
+      alert("For ticket cancellation")
+    }
+    function queries(){
+      alert("For other queries")
+    }
+
+
+</script>
+
+
+
+</body>
+</html>

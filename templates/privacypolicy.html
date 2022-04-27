@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Privacy Policy</title>
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  overflow: hidden;
+  
+  background-image: linear-gradient(-90deg, #d38312,#a83279);
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color:white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color:white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color:black;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-image: linear-gradient(-90deg, #d38312,#a83279);
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color:white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: black;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.login a{
+    float: right;
+    
+}
+
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none}
+img {vertical-align: middle;
+}
+
+
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+body{
+
+
+    color: white;
+    background-color: #000016ed;
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <a href="/"><i class="fa fa-fw fa-home"></i>Home</a>
+  <a href="/"><i class="fa fa-trophy" style="font: size 24px;"></i> Stadium Updates</a>
+  <div class="dropdown">
+    <button class="dropbtn"><i class="fa fa-fw fa-envelope"></i> Contact Us
+    </button>
+    <div class="dropdown-content">
+      <a onclick="ccn()">Customer Care numbers</a>
+      <a onclick="tcl()">For Ticket cancellation</a>
+      <a onclick="queries()">For Other Queries</a>
+    </div>
+</div> 
+<div class="dropdown">
+
+    <button class="dropbtn"><i>&#9432;</i> About</button>
+    <div class="dropdown-content">
+        <a href="/privacypolicy/">Privacy Policy</a>
+        <a href="/t&c/">Terms & Conditions</a>
+    </div> 
+  </div>
+    <div class="login" >
+      {%if user.is_authenticated %}
+      <a href="/search/"><i class="fa fa-fw fa-user"></i>Book Now</a>
+        <a href="/logout/"><i class="fa fa-fw fa-user"></i>Logout</a>
+      {%else%}
+        <a href="/adminlogin/"><i class="fa fa-fw fa-user"></i>Admin Login</a>
+        <a href="/login/"><i class="fa fa-fw fa-user"></i>Login</a>
+        <a href="/register1/"><i>&reg;</i> Register</a>
+        <a href="/login/"><i class="fa fa-fw fa-user"></i>Book Now</a>
+        {%endif%}
+    </div>
+</div>
+
+
+<h1>Privacy Policy for Our website</h1>
+
+
+<p>This privacy policy notifies you how we at www.iplticket.net use the personal information collected through this site. Please read this privacy policy carefully before using the site or submitting any personal information. By using the site, you are agreeing to accept the practices described in this privacy policy. Depending on the situation, these practices may get modified in the future, but any changes will be posted and will only apply to activities and information on a going forward, not retroactive basis. You are encouraged to review the privacy policy whenever you visit the site to make sure that you understand how any personal information you provide will be used.</p>
+
+<p>What personal information do we collect from the people that visit our blog, website or app?</p>
+
+<p>We do not collect information from visitors of our site or other details.</p>
+
+<p>When do we collect information?</p>
+
+<p>We collect information from you when you or enter information on our site. Provide us with feedback on our products or services</p>
+
+<p>How do we use your information?</p>
+
+<p>We may use the information we collect from you when you register sign up for our newsletter, respond to a survey or marketing communication, surf the website, or use certain other site features in the following ways:</p>
+<table>
+<li>To improve our website in order to serve you better.</li>
+</table>
+<p>How do we protect visitor information?</p>
+
+<p>We only provide articles and information. We never ask for personal or private information like email addresses or credit card numbers.</p><p>
+
+<p>Do we use cookies?</p>
+
+<p>Cookies are very small text files that are stored on your computer when you visit some websites.</p>
+
+<p>We use cookies to help identify your computer so we can tailor your user experience.</p>
+
+<p>You can choose to have your computer warn you each time a cookie is being sent, or you can choose to turn off all cookies. You can do this through your browser (like Internet Explorer) settings. Each browser is a little different, so look at your browser's Help menu to learn the correct way to modify your cookies.</p>
+
+<p>You can disable any cookies already stored on your computer, but this may affect some of the functionalities of website.</p>
+
+<p>Do we disclose any information to outside parties?</p>
+
+<p>We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties.</p>
+
+<p>However, non-personally identifiable visitor information may be provided to other parties for marketing, advertising, or other uses.</p>
+
+<p>Google</p>
+
+<p>Google's advertising requirements can be summed up by Google's Advertising Principles. They are put in place to provide a positive experience for users. <a>https://support.google.com/adwordspolicy/answer/1316548?hl=en</a></p>
+
+<p>California Online Privacy Protection Act Compliance</p>
+
+<p>Because we value your privacy, we have taken the necessary precautions to be in compliance with the California Online Privacy Protection Act. We therefore will not distribute your personal information to outside parties without your consent.</p>
+
+<p>According to CalOPPA we agree to the following:</p>
+<table>
+<li>Users can visit our site anonymously.</li>
+
+<li>Children's Online Privacy Protection Act Compliance</li>
+</table>
+<p>We are in compliance with the requirements of COPPA (Childrens Online Privacy Protection Act); we do not collect any information from anyone under 13 years of age.</p>
+
+<p>Does our site allow third-party behavioral tracking?</p>
+
+<p>It's also important to note that we allow third-party behavioral tracking.</p>
+
+<p>Your Consent</p>
+
+<p>By using our site, you consent to our privacy policy.</p>
+
+<p>Changes to our Privacy Policy</p>
+<p></p>If we decide to change our privacy policy, we will post those changes on this page</p>
+
+<script>
+    function ccn() {
+      alert(" Customer care numbers - 0763-6612461, 0763-4090840")
+    }
+
+    function tcl(){
+      alert("For ticket cancellation ")
+    }
+    function queries(){
+      alert("For other queries")
+    }
+
+
+</script>
+
+
+
+</body>
+</html>
