@@ -2,9 +2,10 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
 from .models import showcity, showmatch, showsnack
-# from django.db import connection
+from django.db import transaction, connection
 import mysql.connector
 # Create your views here.
+
 conn = mysql.connector.connect(
   host="localhost",
   user="root",
@@ -14,8 +15,8 @@ conn = mysql.connector.connect(
 mycursor = conn.cursor()
 match = 0
 Price = 0
-ticket = 'BOOK'
 seat = 0
+cursor = connection.cursor()
 def index(request):
     return render(request, 'index.html')
 
@@ -33,10 +34,60 @@ def ticket(request):
         cno = request.POST['Cno']
         expiry = request.POST['expiry']
         cvv = request.POST['cvv']
-        if len(cno)!=12
-            messages.info('Invalid Card number')
-        
-        return render(request, 'ticket.html', {"cvv":cvv})
+        month = expiry[0]+expiry[1]
+        year = expiry[3]+expiry[4]
+        if len(cno)!=12 or not cno.isdigit():
+            messages.info(request, 'Invalid Card number')
+            return redirect("/payment/")
+        elif len(expiry)!=5 or expiry[2]!='/' or not (month.isdigit() and year.isdigit()) or (int(month)>0 and int(month)<=12):
+            messages.info(request , 'Invalid expiry')
+            return redirect("/payment/")
+        elif len(cvv)!=3 or not cvv.isdigit():
+            messages.info(request, 'Invalid cvv')
+            return redirect("/payment/")
+        else:
+            mycursor.execute("SELECT name, date, city from stadium_matches where match_id = %s", [match])
+            b = mycursor.fetchone()
+            # print(b[0])
+            tick = 'BOOK'
+            if match<10:
+                tick = tick+'0'+'0'+ str(match)
+            elif match<100:
+                tick =tick + '0'+str(match)
+            else:
+                tick +=str(match)
+            if seat<10:
+                tick=tick+'0'+str(seat)
+            else:
+                tick+=str(seat)
+            temp = Price + 1500
+            current_user = request.user
+            cursor.execute("Insert into myproject.stadium_ticket values(%s, %s, %s, %s, NULL, NULL, %s, %s)", [tick, b[0], match, current_user.username, seat, temp])
+            col = 'S'+str(seat)
+            if seat == 1:
+                cursor.execute("Update stadium_seats set S1 = 0 where match_id = %s", [match])
+            elif seat == 2:
+                cursor.execute("Update stadium_seats set S2 = 0 where match_id = %s", [match])
+            elif seat == 3:
+                cursor.execute("Update stadium_seats set S3 = 0 where match_id = %s", [match])
+            elif seat == 4:
+                cursor.execute("Update stadium_seats set S4 = 0 where match_id = %s", [match])
+            elif seat == 5:
+                cursor.execute("Update stadium_seats set S5 = 0 where match_id = %s", [match])
+            elif seat == 6:
+                cursor.execute("Update stadium_seats set S6 = 0 where match_id = %s", [match])
+            elif seat == 7:
+                cursor.execute("Update stadium_seats set S7 = 0 where match_id = %s", [match])
+            elif seat == 8:
+                cursor.execute("Update stadium_seats set S8 = 0 where match_id = %s", [match])
+            elif seat == 9:
+                cursor.execute("Update stadium_seats set S9 = 0 where match_id = %s", [match])
+            elif seat == 10:
+                cursor.execute("Update stadium_seats set S10 = 0 where match_id = %s", [match])
+            
+            transaction.commit()
+            return render(request, 'ticket.html', {"b":b, "temp":temp, "tick":tick})
+    return render(request, 'ticket.html')
 
 def payment(request):
     if request.method == 'POST':
@@ -45,15 +96,16 @@ def payment(request):
         if value!="default":
             mycursor.execute("SELECT price from stadium_snacks where snacks_id = %s", [snack])
             b = mycursor.fetchone()
-            print(b)
+
         global seat
-        seat = value
+        seat = int(value)
         return render(request, 'payment.html', {"value":value, "snack":snack})
+    return render(request, 'payment.html')
 def seats2(request):
     results4 = showsnack.objects.all()
     if request.method=='POST':
         global match
-        match = request.POST['radio']
+        match = int(request.POST['radio'])
         mycursor.execute("SELECT S1, S2, S3, S4, S5, S6, S7, S8, S9, S10 from stadium_seats where match_id = %s;", [match])
         b = mycursor.fetchall()[0]
         c =[]

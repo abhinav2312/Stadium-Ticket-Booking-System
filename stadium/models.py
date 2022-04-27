@@ -18,3 +18,5 @@ class showsnack(models.Model):
     price = models.IntegerField()
     class Meta:
         db_table = "stadium_snacks"
+class Meta:
+    db_table = "stadium_ticket"
