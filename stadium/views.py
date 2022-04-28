@@ -12,11 +12,11 @@ conn = mysql.connector.connect(
   password="ABHI@123",
   database="myproject"
 )
-mycursor = conn.cursor()
+num = 'BOOK'
 match = 0
 Price = 0
 seat = 0
-cursor = connection.cursor()
+snacks = 0
 def index(request):
     return render(request, 'index.html')
 
@@ -29,8 +29,41 @@ def logout(request):
 def tc(request):
     return render(request, 't&c.html')
 
+def search2(request):
+    return render(request, 'search2.html')
+def find(request):
+    mycursor = conn.cursor()
+    global num
+    num = request.POST['number']
+    print(num)
+    mycursor.execute("SELECT * from stadium_ticket where ticket = %s;", [num])
+    b = mycursor.fetchone()
+    if not b:
+        messages.info(request, 'Invalid ticket number')
+        mycursor.close()
+        return redirect("/search2/")
+    else:
+        mycursor.execute("SELECT snacks from stadium_snacks where snacks_id = %s", [b[10]])
+        c = mycursor.fetchone()
+        mycursor.close()
+        return render(request, 'cancel.html', {"b":b, "c":c})
+    mycursor.close()
+
+def cancel(request):
+    mycursor = conn.cursor()
+    mycursor.execute("select seat, match_id from stadium_ticket where ticket = %s", [num])
+    b = mycursor.fetchone()
+    seat = b[0]
+    match = b[1]
+    mycursor.execute(f"Update stadium_seats set S{seat} = {seat} where match_id = {match}")
+    mycursor.execute("delete from stadium_ticket where ticket = %s", [num])
+    mycursor.close()
+    return render(request, 'index.html')
+
 def ticket(request):
     if request.method == 'POST':
+        # cursor = connection.cursor()
+        mycursor = conn.cursor()
         cno = request.POST['Cno']
         expiry = request.POST['expiry']
         cvv = request.POST['cvv']
@@ -46,9 +79,8 @@ def ticket(request):
             messages.info(request, 'Invalid cvv')
             return redirect("/payment/")
         else:
-            mycursor.execute("SELECT name, date, city from stadium_matches where match_id = %s", [match])
+            mycursor.execute("SELECT name, date, city, stadium, time from stadium_matches where match_id = %s", [match])
             b = mycursor.fetchone()
-            # print(b[0])
             tick = 'BOOK'
             if match<10:
                 tick = tick+'0'+'0'+ str(match)
@@ -62,58 +94,49 @@ def ticket(request):
                 tick+=str(seat)
             temp = Price + 1500
             current_user = request.user
-            cursor.execute("Insert into myproject.stadium_ticket values(%s, %s, %s, %s, NULL, NULL, %s, %s)", [tick, b[0], match, current_user.username, seat, temp])
-            col = 'S'+str(seat)
-            if seat == 1:
-                cursor.execute("Update stadium_seats set S1 = 0 where match_id = %s", [match])
-            elif seat == 2:
-                cursor.execute("Update stadium_seats set S2 = 0 where match_id = %s", [match])
-            elif seat == 3:
-                cursor.execute("Update stadium_seats set S3 = 0 where match_id = %s", [match])
-            elif seat == 4:
-                cursor.execute("Update stadium_seats set S4 = 0 where match_id = %s", [match])
-            elif seat == 5:
-                cursor.execute("Update stadium_seats set S5 = 0 where match_id = %s", [match])
-            elif seat == 6:
-                cursor.execute("Update stadium_seats set S6 = 0 where match_id = %s", [match])
-            elif seat == 7:
-                cursor.execute("Update stadium_seats set S7 = 0 where match_id = %s", [match])
-            elif seat == 8:
-                cursor.execute("Update stadium_seats set S8 = 0 where match_id = %s", [match])
-            elif seat == 9:
-                cursor.execute("Update stadium_seats set S9 = 0 where match_id = %s", [match])
-            elif seat == 10:
-                cursor.execute("Update stadium_seats set S10 = 0 where match_id = %s", [match])
-            
-            transaction.commit()
-            return render(request, 'ticket.html', {"b":b, "temp":temp, "tick":tick})
+            mycursor.execute("Insert into myproject.stadium_ticket values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)", [tick, current_user.username, b[0], match, b[3], b[2], b[1], b[4], seat, temp, snacks])
+            mycursor.execute("SELECT snacks from stadium_snacks where snacks_id = %s", [snacks])
+            c = mycursor.fetchone()
+            mycursor.execute(f"Update stadium_seats set S{seat} = 0 where match_id = {match}")
+            mycursor.close()
+            return render(request, 'ticket.html', {"b":b, "temp":temp, "tick":tick, "c":c, "seat":seat})
     return render(request, 'ticket.html')
 
 def payment(request):
     if request.method == 'POST':
-        snack = request.POST['snk']
+        mycursor = conn.cursor()
+        snk = request.POST['snk']
         value = request.POST['radio'] 
-        if value!="default":
-            mycursor.execute("SELECT price from stadium_snacks where snacks_id = %s", [snack])
+        if snk!="default":
+            mycursor.execute("SELECT price from stadium_snacks where snacks_id = %s", [snk])
             b = mycursor.fetchone()
-
+            global Price
+            Price = b[0]
+            global snacks
+            snacks = int(snk)
+        else:
+            snacks = 0
         global seat
         seat = int(value)
-        return render(request, 'payment.html', {"value":value, "snack":snack})
+        mycursor.close()
+        return render(request, 'payment.html', {"value":value, "snack":snk})
     return render(request, 'payment.html')
+
 def seats2(request):
     results4 = showsnack.objects.all()
     if request.method=='POST':
+        mycursor = conn.cursor()
         global match
         match = int(request.POST['radio'])
         mycursor.execute("SELECT S1, S2, S3, S4, S5, S6, S7, S8, S9, S10 from stadium_seats where match_id = %s;", [match])
         b = mycursor.fetchall()[0]
-        c =[]
-        return render(request, 'seats2.html', {"b":b, "c":c, "results4":results4})
+        mycursor.close()
+        return render(request, 'seats2.html', {"b":b, "results4":results4})
 
 
 def seats(request):
     if request.method == 'POST':
+        mycursor = conn.cursor()
         city = request.POST['Cityname']
         date = request.POST['Date']
         match = request.POST['Match']
@@ -122,6 +145,7 @@ def seats(request):
             b = mycursor.fetchall()
             if len(b) == 0:
                 messages.info(request, 'No matches found')
+                mycursor.close()
                 return redirect("/search/")
             return render(request, 'seats.html', {"b":b})
         elif match == 'default':
@@ -129,13 +153,16 @@ def seats(request):
             b = mycursor.fetchall()
             if len(b) == 0:
                 messages.info(request, 'No matches found')
+                mycursor.close()
                 return redirect("/search/")
+            mycursor.close()
             return render(request, 'seats.html', {"b":b})
         elif city == 'default':
             mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and match_id = %s", [date, match])
             b = mycursor.fetchall()
             if len(b) == 0:
                 messages.info(request, 'No matches found')
+                mycursor.close()
                 return redirect('/search/')
             return render(request, 'seats.html', {"b":b})
         else:
@@ -143,7 +170,9 @@ def seats(request):
             b = mycursor.fetchall()
             if len(b) == 0:
                 messages.info(request, 'No matches found')
+                mycursor.close()
                 return redirect("/search/")
+            mycursor.close()
             return render(request, 'seats.html', {"b":b})
         
 def search(request):

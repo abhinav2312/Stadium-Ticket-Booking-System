@@ -14,5 +14,8 @@ urlpatterns = [
     path('seats/', views.seats, name = 'seats'),
     path('seats2/', views.seats2, name = "seats2"),
     path('payment/', views.payment, name = "payment"),
-    path('ticket/', views.ticket, name = "ticket")
+    path('ticket/', views.ticket, name = "ticket"),
+    path('search2/', views.search2, name = "search2"),
+    path('find/', views.find, name = "find"),
+    path('cancel/', views.cancel, name = "cancel")
 ]

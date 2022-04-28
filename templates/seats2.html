@@ -194,7 +194,7 @@ body{
 </div>
 
 <div>
-    <p>Select Ticket Name</p>
+    <p>Select Ticket</p>
     <form action="/payment/" method="post">
       {%csrf_token%}
     {%for i in b%}
@@ -202,7 +202,6 @@ body{
     <input type="radio" name="radio" value={{i}} id="{{i}}">
     <label for="radio"> <img src="https://cdn-icons-png.flaticon.com/512/686/686648.png" style="width: 30px;height:auto"> {{i}}</label>
     <br>
-    {%else%}
     {%endif%}
     {%endfor%}
       <label><b>Snacks  
