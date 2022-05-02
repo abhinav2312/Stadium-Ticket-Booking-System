@@ -189,7 +189,14 @@ body{
     </div> 
   </div>
   <div class="login" >
+    {%if user.is_authenticated %}
+    <a href="/search/"><i class="fa fa-fw fa-user"></i>Book Now</a>
       <a href="/logout/"><i class="fa fa-fw fa-user"></i>Logout</a>
+    {%else%}
+      <a href="/login/"><i class="fa fa-fw fa-user"></i>Login</a>
+      <a href="/register1/"><i>&reg;</i> Register</a>
+      {%endif%}
+      
   </div>
 </div>
 
@@ -199,7 +206,7 @@ body{
       {%csrf_token%}
     {%for i in b%}
     {%if i%}
-    <input type="radio" name="radio" value={{i}} id="{{i}}">
+    <input type="radio" name="radio" value={{i}} id="{{i}}" required>
     <label for="radio"> <img src="https://cdn-icons-png.flaticon.com/512/686/686648.png" style="width: 30px;height:auto"> {{i}}</label>
     <br>
     {%endif%}

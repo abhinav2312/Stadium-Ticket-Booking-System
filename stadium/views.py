@@ -6,19 +6,19 @@ from django.db import transaction, connection
 import mysql.connector
 # Create your views here.
 
-conn = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="ABHI@123",
-  database="myproject"
-)
+# conn = mysql.connector.connect(
+#   host="localhost",
+#   user="root",
+#   password="ABHI@123",
+#   database="myproject"
+# )
 num = 'BOOK'
 match = 0
 Price = 0
 seat = 0
 snacks = 0
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', )
 
 def login(request):
     return render(request, 'login.html')
@@ -26,17 +26,18 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+    
 def tc(request):
     return render(request, 't&c.html')
 
 def search2(request):
     return render(request, 'search2.html')
+    
 def find(request):
-    mycursor = conn.cursor()
+    mycursor = connection.cursor()
     global num
     num = request.POST['number']
-    print(num)
-    mycursor.execute("SELECT * from stadium_ticket where ticket = %s;", [num])
+    mycursor.execute("SELECT * from stadium_ticket where ticket = %s", [num])
     b = mycursor.fetchone()
     if not b:
         messages.info(request, 'Invalid ticket number')
@@ -47,23 +48,23 @@ def find(request):
         c = mycursor.fetchone()
         mycursor.close()
         return render(request, 'cancel.html', {"b":b, "c":c})
-    mycursor.close()
 
 def cancel(request):
-    mycursor = conn.cursor()
+    mycursor = connection.cursor()
     mycursor.execute("select seat, match_id from stadium_ticket where ticket = %s", [num])
     b = mycursor.fetchone()
     seat = b[0]
     match = b[1]
-    mycursor.execute(f"Update stadium_seats set S{seat} = {seat} where match_id = {match}")
+    
+    mycursor.execute(f"UPDATE stadium_seats SET S{seat} = {seat} where match_id = {match}")
+            
     mycursor.execute("delete from stadium_ticket where ticket = %s", [num])
     mycursor.close()
     return render(request, 'index.html')
 
 def ticket(request):
     if request.method == 'POST':
-        # cursor = connection.cursor()
-        mycursor = conn.cursor()
+        mycursor = connection.cursor()
         cno = request.POST['Cno']
         expiry = request.POST['expiry']
         cvv = request.POST['cvv']
@@ -71,12 +72,15 @@ def ticket(request):
         year = expiry[3]+expiry[4]
         if len(cno)!=12 or not cno.isdigit():
             messages.info(request, 'Invalid Card number')
+            mycursor.close()
             return redirect("/payment/")
         elif len(expiry)!=5 or expiry[2]!='/' or not (month.isdigit() and year.isdigit()) or (int(month)>0 and int(month)<=12):
             messages.info(request , 'Invalid expiry')
+            mycursor.close()
             return redirect("/payment/")
         elif len(cvv)!=3 or not cvv.isdigit():
             messages.info(request, 'Invalid cvv')
+            mycursor.close()
             return redirect("/payment/")
         else:
             mycursor.execute("SELECT name, date, city, stadium, time from stadium_matches where match_id = %s", [match])
@@ -104,7 +108,7 @@ def ticket(request):
 
 def payment(request):
     if request.method == 'POST':
-        mycursor = conn.cursor()
+        mycursor = connection.cursor()
         snk = request.POST['snk']
         value = request.POST['radio'] 
         if snk!="default":
@@ -125,7 +129,7 @@ def payment(request):
 def seats2(request):
     results4 = showsnack.objects.all()
     if request.method=='POST':
-        mycursor = conn.cursor()
+        mycursor = connection.cursor()
         global match
         match = int(request.POST['radio'])
         mycursor.execute("SELECT S1, S2, S3, S4, S5, S6, S7, S8, S9, S10 from stadium_seats where match_id = %s;", [match])
@@ -136,7 +140,7 @@ def seats2(request):
 
 def seats(request):
     if request.method == 'POST':
-        mycursor = conn.cursor()
+        mycursor = connection.cursor()
         city = request.POST['Cityname']
         date = request.POST['Date']
         match = request.POST['Match']
@@ -147,6 +151,7 @@ def seats(request):
                 messages.info(request, 'No matches found')
                 mycursor.close()
                 return redirect("/search/")
+            mycursor.close()
             return render(request, 'seats.html', {"b":b})
         elif match == 'default':
             mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and city = %s", [date, city])
@@ -164,6 +169,7 @@ def seats(request):
                 messages.info(request, 'No matches found')
                 mycursor.close()
                 return redirect('/search/')
+            mycursor.close()
             return render(request, 'seats.html', {"b":b})
         else:
             mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and match_id = %s and city = %s", [date, match, city])
@@ -220,9 +226,24 @@ def register2(request):
         
     else:
         return render(request, 'home.html')
-    
-def adminlogin(request):
-    return render(request, 'adminlogin.html')
 
 def pp(request):
     return render(request, 'privacypolicy.html')
+
+def stadiumupdates(request):
+    mycursor = connection.cursor()
+    mycursor.execute("SELECT * from stadium_matches")
+    b = mycursor.fetchall()
+    mycursor.close()
+    return render(request, 'stadiumupdates.html', {"b":b})
+
+def account(request):
+    current_user = request.user
+    name = current_user.get_full_name
+    email = current_user.email
+    username = current_user.username
+    mycursor = connection.cursor()
+    mycursor.execute("SELECT * from stadium_ticket where username = %s", [username])
+    b = mycursor.fetchall()
+    mycursor.close()
+    return render(request, 'account.html', {"name":name, "username":username, "email":email, "b":b})

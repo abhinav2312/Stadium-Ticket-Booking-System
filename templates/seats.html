@@ -189,7 +189,14 @@ body{
     </div> 
   </div>
   <div class="login" >
+    {%if user.is_authenticated %}
+    <a href="/search/"><i class="fa fa-fw fa-user"></i>Book Now</a>
       <a href="/logout/"><i class="fa fa-fw fa-user"></i>Logout</a>
+    {%else%}
+      <a href="/login/"><i class="fa fa-fw fa-user"></i>Login</a>
+      <a href="/register1/"><i>&reg;</i> Register</a>
+      {%endif%}
+      
   </div>
 </div>
 

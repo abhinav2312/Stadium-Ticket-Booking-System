@@ -23,7 +23,6 @@ urlpatterns = [
     path('login/', include('stadium.urls')),
     path('register1/', include('stadium.urls')),
     path('register2/',include('stadium.urls')),
-    path('adminlogin/', include('stadium.urls')),
     path('search/', include('stadium.urls')),
     path('privacypolicy/', include('stadium.urls')),
     path('logout/', include('stadium.urls')),
@@ -34,6 +33,8 @@ urlpatterns = [
     path('ticket/', include('stadium.urls')),
     path('search2/', include('stadium.urls')),
     path('find/', include('stadium.urls')),
-    path('cancel/', include('stadium.urls'))
+    path('cancel/', include('stadium.urls')),
+    path('stadiumupdates/', include('stadium.urls')),
+    path('account/', include('stadium.urls'))
 ]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

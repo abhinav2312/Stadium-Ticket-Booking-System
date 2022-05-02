@@ -1,10 +1,9 @@
-{% load static%}
 <!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Welcome to Stadium ticket booking</title>
+<title>Stadium Updates</title>
 <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -76,10 +75,6 @@ body {
     
 }
 
-.login p{
-  color: white;
-}
-
 * {box-sizing: border-box}
 body {font-family: Verdana, sans-serif; margin:0}
 .mySlides {display: none}
@@ -87,6 +82,11 @@ img {vertical-align: middle;
 }
 
 
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
 
 
 .prev, .next {
@@ -155,13 +155,35 @@ img {vertical-align: middle;
   animation-name: fade;
   animation-duration: 1.5s;
 }
+.details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.mname{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    text-align: center;
+    background-color: white;
+    width: 70%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    margin-left: 15%;
+    border-radius: 15px;
+    color: black;
+}
+.mname:hover{
+    box-shadow:  inset 0 -3em 3em rgba(0,0,0,0.1),
+    0 0  0 2px rgb(255,255,255),
+    0.3em 0.3em 1em rgba(0,0,0,0.3);
+}
 
 body{
-    background-image: url(https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1905&q=80);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
+
+
+    color: white;
+    background-color: #000016ed;
 }
 
 
@@ -190,20 +212,23 @@ body{
         <a href="/t&c/">Terms & Conditions</a>
     </div> 
   </div>
-  <div class="login" >
-    {%if user.is_authenticated %}
+    <div class="login" >
+      {%if user.is_authenticated %}
       <a href="/search/"><i class="fa fa-fw fa-user"></i>Book Now</a>
-      <a href="/logout/"><i class="fa fa-fw fa-user"></i>Logout</a>
-      <a href="/account/"><i class="fa fa-fw fa-user"></i>My Account</a>
-    {%else%}
-      <a href="/login/"><i class="fa fa-fw fa-user"></i>Login</a>
-      <a href="/register1/"><i>&reg;</i> Register</a>
-      <a href="/login/"><i class="fa fa-fw fa-user"></i>Book Now</a>
-      {%endif%}
-  </div>
+        <a href="/logout/"><i class="fa fa-fw fa-user"></i>Logout</a>
+      {%else%}
+        <a href="/login/"><i class="fa fa-fw fa-user"></i>Login</a>
+        <a href="/register1/"><i>&reg;</i> Register</a>
+        <a href="/login/"><i class="fa fa-fw fa-user"></i>Book Now</a>
+        {%endif%}
+    </div>
 </div>
-
-
+<div class="details"></div>
+{% for i in b%}
+<div class="mname">
+<div class="box">{{i.1}} match </div><div class="box">{{i.2}} on {{i.6}}, {{i.7}}</div> <div class="box"> at {{i.3}}, {{i.5}}</div>
+</div>
+{% endfor %}
 <script>
     function ccn() {
       alert(" Customer care numbers - 0763-6612461, 0763-4090840")
@@ -222,3 +247,4 @@ body{
 
 
 </body>
+</html>

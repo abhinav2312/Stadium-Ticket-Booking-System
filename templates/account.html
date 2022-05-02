@@ -4,7 +4,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<title>Welcome to Stadium ticket booking</title>
+<title>My Account</title>
 <style>
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -155,7 +155,17 @@ img {vertical-align: middle;
   animation-name: fade;
   animation-duration: 1.5s;
 }
-
+.acc{
+    display: flex;
+    justify-content: center;
+}
+.personal{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 2px solid white;
+    border-radius: 10px;
+}
 body{
     background-image: url(https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1905&q=80);
     background-repeat: no-repeat;
@@ -202,7 +212,32 @@ body{
       {%endif%}
   </div>
 </div>
-
+<div class="acc">
+    <div class="personal">
+        <div class="img"><img src="https://media.istockphoto.com/vectors/user-icon-flat-isolated-on-white-background-user-symbol-vector-vector-id1300845620?k=20&m=1300845620&s=612x612&w=0&h=f4XTZDAv7NPuZbG0habSpU0sNgECM0X7nbKzTUta3n8=" alt="" width="10%"></div>
+        <div class="det">Username: {{username}}</div>
+        <div class="det">Name: {{name}}</div>
+        <div class="det">email: {{email}}</div>
+        {% if b%}
+        <div class="det">Your Bookings are</div>
+        {% for i in b%}
+        <div class="det">
+            Ticket Number:{{i.0}}
+            match:{{i.2}}
+            stadium:{{i.4}}
+            city:{{i.5}}
+            date:{{i.6}}
+            time:{{i.7}}
+            seat:{{i.8}}
+            price:{{i.9}}
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="det">You Have No Active bookings, Book now :)</div>
+        {%endif%}
+    </div>
+    <!-- <div class="booking"></div> -->
+</div>
 
 <script>
     function ccn() {
