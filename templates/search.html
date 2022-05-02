@@ -334,7 +334,15 @@
       <form id = "search"  action= "/seats/" method="post"> 
         {%csrf_token%}
         <h1 style="color:white;">Search Stadiums</h1> 
-
+        <label><b>Game   
+        </b><br>    
+        </label>    
+        <select class="opt" name="game" id="game">
+            <option class="opt" class="station" value = "default"selected>Select game type</option> 
+            {% for a in results3%}
+            <option value="{{a}}">{{a}}</option>
+            {% endfor %}
+        </select> <br>
         <label><b>City   
         </b><br>    
         </label>    

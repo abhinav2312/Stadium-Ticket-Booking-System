@@ -10,6 +10,7 @@ class showmatch(models.Model):
     date = models.DateField()
     city = models.CharField(max_length = 30)
     match_id = models.IntegerField(primary_key = True)
+    game = models.CharField(max_length = 30)
     class Meta:
         db_table = "stadium_matches"
 class showsnack(models.Model):

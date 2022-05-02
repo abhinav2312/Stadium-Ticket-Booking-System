@@ -144,7 +144,8 @@ def seats(request):
         city = request.POST['Cityname']
         date = request.POST['Date']
         match = request.POST['Match']
-        if match=='default'and city == 'default':
+        game = request.POST['game']
+        if match=='default'and city == 'default' and game == 'default':
             mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s;", [date])
             b = mycursor.fetchall()
             if len(b) == 0:
@@ -153,7 +154,7 @@ def seats(request):
                 return redirect("/search/")
             mycursor.close()
             return render(request, 'seats.html', {"b":b})
-        elif match == 'default':
+        elif match == 'default' and game == 'default':
             mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and city = %s", [date, city])
             b = mycursor.fetchall()
             if len(b) == 0:
@@ -162,7 +163,7 @@ def seats(request):
                 return redirect("/search/")
             mycursor.close()
             return render(request, 'seats.html', {"b":b})
-        elif city == 'default':
+        elif city == 'default' and game == 'default':
             mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and match_id = %s", [date, match])
             b = mycursor.fetchall()
             if len(b) == 0:
@@ -171,8 +172,44 @@ def seats(request):
                 return redirect('/search/')
             mycursor.close()
             return render(request, 'seats.html', {"b":b})
+        elif city == 'default' and match == 'default':
+            mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and game = %s", [date, game])
+            b = mycursor.fetchall()
+            if len(b) == 0:
+                messages.info(request, 'No matches found')
+                mycursor.close()
+                return redirect('/search/')
+            mycursor.close()
+            return render(request, 'seats.html', {"b":b})
+        elif city =='default':
+            mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and match_id = %s and game = %s", [date, match, game])
+            b = mycursor.fetchall()
+            if len(b) == 0:
+                messages.info(request, 'No matches found')
+                mycursor.close()
+                return redirect('/search/')
+            mycursor.close()
+            return render(request, 'seats.html', {"b":b})
+        elif match == 'default':
+            mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and city = %s and game = %s", [date, city, game])
+            b = mycursor.fetchall()
+            if len(b) == 0:
+                messages.info(request, 'No matches found')
+                mycursor.close()
+                return redirect('/search/')
+            mycursor.close()
+            return render(request, 'seats.html', {"b":b})
+        elif game == 'default':
+            mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and city = %s and match_id = %s", [date, city, match])
+            b = mycursor.fetchall()
+            if len(b) == 0:
+                messages.info(request, 'No matches found')
+                mycursor.close()
+                return redirect('/search/')
+            mycursor.close()
+            return render(request, 'seats.html', {"b":b})
         else:
-            mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and match_id = %s and city = %s", [date, match, city])
+            mycursor.execute("SELECT name, city, date, match_id FROM stadium_matches where date = %s and match_id = %s and city = %s and game = %s", [date, match, city, game])
             b = mycursor.fetchall()
             if len(b) == 0:
                 messages.info(request, 'No matches found')
@@ -184,18 +221,19 @@ def seats(request):
 def search(request):
     results = showcity.objects.all().values_list('city', flat=True).distinct()
     results2 = showmatch.objects.all()
+    results3 = showmatch.objects.all().values_list('game', flat = True).distinct()
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username = username, password = password)
         if user is not None:
             auth.login(request, user)
-            return render(request, 'search.html', {"results":results, "results2":results2})
+            return render(request, 'search.html', {"results":results, "results2":results2, "results3":results3})
         else:
             messages.info(request, 'Invalid credentials')
             return redirect('/login/')
     else:
-        return render(request, 'search.html', {"results":results, "results2":results2})
+        return render(request, 'search.html', {"results":results, "results2":results2, "results3":results3})
 def register1(request):
     return render(request, 'registration1.html')
 
