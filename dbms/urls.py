@@ -35,6 +35,7 @@ urlpatterns = [
     path('find/', include('stadium.urls')),
     path('cancel/', include('stadium.urls')),
     path('stadiumupdates/', include('stadium.urls')),
-    path('account/', include('stadium.urls'))
+    path('account/', include('stadium.urls')),
+    path('search3/', include('stadium.urls'))
 ]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

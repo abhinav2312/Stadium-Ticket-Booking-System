@@ -59,7 +59,22 @@
         <input placeholder="Enter Ticket number" name = "number" id = "number" required>
     </div><br>
     <div class=center>
-    <button type="submit">Submit</button>    
+    <button type="submit" name="ticket_cancel">Submit</button>    
+    </div>    
+    </form>
+    <form id = "stadium_cancel"  action= "/find/" method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+    <div class=center>
+        <input type="date" value="date" name="date" required>
+        <select class="opt" name="game" id="game">
+            <option class="opt" class="station" value = "default" selected disabled>Select stadium name</option> 
+            {% for a in results3%}
+            <option value="{{a}}">{{a}}</option>
+            {% endfor %}
+        </select>
+    </div><br>
+    <div class=center>
+    <button type="submit" name="stadium_cancel">Submit</button>    
     </div>    
     </form>
 

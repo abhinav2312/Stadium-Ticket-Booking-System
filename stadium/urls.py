@@ -18,5 +18,6 @@ urlpatterns = [
     path('find/', views.find, name = "find"),
     path('cancel/', views.cancel, name = "cancel"),
     path('stadiumupdates/', views.stadiumupdates, name = "stadiumupdates"),
-    path('account/', views.account, name = "account")
+    path('account/', views.account, name = "account"),
+    path('search3/', views.search3, name = "search3")
 ]

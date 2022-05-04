@@ -237,7 +237,14 @@
   background-color: transparent;
   text-decoration: none;
 }
-
+.tot{
+  display: flex;
+  flex-direction: column;
+}
+.sea{
+  display: flex;
+  justify-content: space-between;
+}
 .link:hover {
   color: orange;
   background-color: transparent;
@@ -324,16 +331,17 @@
   
   
   </script>
-  
- 
-    <a id="sear" href = "/search2/" class="button" type="submit" >Cancel Ticket</a>
-  
+  <div class="tot">
+ <div class="can">
+  <a id="sear" href = "/search2/" class="button" type="submit" >Cancel Ticket</a>
+  </div>
+  <div class="sea">
   <div class="container" id="container">
 		<div class="form-container log-in-container" style="display: inline;">
     <div class="search " style="width: 450px;">
       <form id = "search"  action= "/seats/" method="post"> 
         {%csrf_token%}
-        <h1 style="color:white;">Search Stadiums</h1> 
+        <h1 style="color:white;">Search Matches</h1> 
         <label><b>Game   
         </b><br>    
         </label>    
@@ -377,13 +385,52 @@
     </div>      
     </div>
     </div>     
-    
-
+    <div class="container" id="container">
+      <div class="form-container log-in-container" style="display: inline;">
+      <div class="search " style="width: 450px;">
+        <form id = "search"  action= "/search3/" method="post"> 
+          {%csrf_token%}
+          <h1 style="color:white;">Search Stadiums</h1> 
+          <label><b>Game   
+          </b><br>    
+          </label>    
+          <select class="opt" name="game" id="game">
+              <option class="opt" class="station" value = "default"selected>Select game type</option> 
+              {% for a in results3%}
+              <option value="{{a}}">{{a}}</option>
+              {% endfor %}
+          </select> <br>
+          <label><b>City   
+          </b><br>    
+          </label>    
+          <select class="opt" name="Cityname" id="Cityname">
+              <option class="opt" class="station" value = "default"selected>Enter city name</option> 
+              {% for a in results%}
+              <option value="{{a}}">{{a}}</option>
+              {% endfor %}
+          </select> <br>
+          <label><b>Date   
+          </b><br>    
+          </label>    
+          <input class="opt" type="date" name="Date" id="Date" placeholder="Date" required> <br>
+          <button class="button" type="submit">Search</button>    
+          <div id="alert">
+          {%for message in messages%}
+  
+          {{message}}
+          {%endfor%}
+          </div>
+        </form> 
+        
+      </div>      
+      </div>
+      </div>     
+</div>
+</div>
   <script>
     var today = new Date().toISOString().split('T')[0];
     document.getElementsByName("Date")[0].setAttribute('min', today);
   </script>
-  
 </body>
 </html>
 

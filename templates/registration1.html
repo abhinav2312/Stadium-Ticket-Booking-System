@@ -157,18 +157,15 @@
     <form id="regForm" action='/register2/' method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <h1>Registration</h1>
-      <div >
+      <div>
         <p><input placeholder="First name" name="fname" required></p>
         <p><input placeholder="Last name" name="lname" required></p>
         <p><input type="email" name="email" placeholder="Email" required></p>
         <p><input placeholder="Username" oninput="this.className = ''" name="username" required></p>
         <p><input type="password" placeholder="Password" name="password" required></p>
         <p><input type="password" placeholder=" Confirm Password" name=" confirmpassword" required></p>
-        
       </div>
         
-      </div>
-    
       <div style="overflow:auto;">
         <div style="float:right;">
           <button type="submit" class="button">Register</button>

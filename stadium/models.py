@@ -3,6 +3,7 @@ from django.db import models
 
 class showcity(models.Model):
     city = models.CharField(max_length = 30)
+    name = models.CharField(max_length = 50)
     class Meta:
         db_table = "stadium_stadium"
 class showmatch(models.Model):

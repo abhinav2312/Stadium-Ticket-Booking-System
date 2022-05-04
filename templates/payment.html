@@ -156,7 +156,8 @@
     
     <form id="regForm" action='/ticket/' method="POST" enctype="multipart/form-data">
       {% csrf_token %}
-      <h1>Payment</h1>
+      <h1>Payment Gateway</h1>
+      <h3>Pay rupees {{Price}}</h3>
       <div >
         <p><input placeholder="Card number" name="Cno" required></p>
         <p><input type="text" placeholder="Expiry" name="expiry" required style="width: auto;">

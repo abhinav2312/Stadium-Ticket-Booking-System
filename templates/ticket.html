@@ -57,21 +57,30 @@
                 </div>
               </div>
         </form>
+        {%if temp2 %}
         <form id = "ticket"  action= "/" method="post">
-        <div id="htmlContent">
-        <h1 style="text-align: center;color: black;">Ticket</h1> 
-        <br> 
-        Ticket number: {{tick}}<br>
-        seat number: {{seat}} <br>
-        {{b.0}} <br>
-        {{b.4}},{{b.1}} at {{b.3}},{{b.2}} <br> 
-         <hr>
-        snacks: {{c.0}} <br>
-        Price = {{temp}}
-        
-        <br>
-        </div>
-        </form>
+            <div id="htmlContent">
+            <h1 style="text-align: center;color: black;">Stadium</h1> 
+            {{b.1}} Stadium <br> {{b.2}}, {{b.3}}, {{b.4}} is booked for {{username}} on {{date}}
+            </div>
+            </form>
+        {%else%}
+            <form id = "ticket"  action= "/" method="post">
+            <div id="htmlContent">
+            <h1 style="text-align: center;color: black;">Ticket</h1> 
+            <br> 
+            Ticket number: {{tick}}<br>
+            seat number: {{seat}} <br>
+            {{b.0}} <br>
+            {{b.4}},{{b.1}} at {{b.3}},{{b.2}} <br> 
+            <hr>
+            User: {{username}} <br>
+            snacks: {{c.0}} <br>
+            Price = {{Price}}
+            <br>
+            </div>
+            </form>
+        {%endif%}
         <div id="editor"></div>
         <center>
             <p>
