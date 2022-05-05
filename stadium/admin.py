@@ -1,11 +1,10 @@
 from django.contrib import admin
-# from .models import stadium, snacks, equipment
 # Register your models here.
-from .models import showcity, showmatch, showsnack
+from .models import snacks, stadium, ticket, book, matches, seats
 
-admin.site.register(showcity)
-admin.site.register(showmatch)
-admin.site.register(showsnack)
-# admin.site.register(stadium)
-# admin.site.register(snacks)
-# admin.site.register(equipment)
+admin.site.register(ticket)
+admin.site.register(seats)
+admin.site.register(matches)
+admin.site.register(stadium)
+admin.site.register(snacks)
+admin.site.register(book)

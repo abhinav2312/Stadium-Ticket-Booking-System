@@ -235,15 +235,15 @@ body{
         {% else %}
         <div class="det">You Have No Active Match bookings, Book now :)</div>
         {%endif%}
-        {% if b%}
+        {% if c%}
         <div class="det">Your Stadium Bookings</div>
         {% for i in c%}
         <div class="det">
-            {{i.1}} Stadium <br>
-            stadium:{{i.2}} <br>
-            city:{{i.5}} <br>
-            date:{{i.3}} <br>
-            Rent:{{i.7}} <br>
+            {{i.2}} Stadium <br>
+            stadium:{{i.3}} <br>
+            city:{{i.6}} <br>
+            date:{{i.4}} <br>
+            Rent:{{i.8}} <br>
         </div>
         {% endfor %}
         {%endif%}

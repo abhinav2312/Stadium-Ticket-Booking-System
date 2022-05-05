@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User, auth
-from .models import showcity, showmatch, showsnack
+from .models import snacks, stadium, ticket, book, matches, seats
 from django.db import transaction, connection
 import mysql.connector
 # Create your views here.
@@ -35,11 +35,12 @@ def tc(request):
     return render(request, 't&c.html')
 
 def search2(request):
-    results3 = showcity.objects.all().values_list('name', flat = True).distinct()
+    results3 = stadium.objects.all().values_list('name', flat = True).distinct()
     return render(request, 'search2.html', {"results3":results3})
     
 def find(request):
     if 'ticket_cancel' in request.POST:
+        current_user = request.user
         global temp2
         temp2 = 0
         mycursor = connection.cursor()
@@ -49,6 +50,10 @@ def find(request):
         b = mycursor.fetchone()
         if not b:
             messages.info(request, 'Invalid ticket number')
+            mycursor.close()
+            return redirect("/search2/")
+        elif current_user.username != b[1]:
+            messages.info(request, 'Cannot access that ticket')
             mycursor.close()
             return redirect("/search2/")
         else:
@@ -135,18 +140,23 @@ def ticket(request):
                 b = mycursor.fetchone()
                 current_user = request.user
                 print(b)
-                mycursor.execute("Insert into stadium_book values(%s, %s, %s, %s, %s, %s, %s, %s)", [stad, b[0], b[1], date, current_user.username, b[2], b[3], b[4]])
+                mycursor.execute("Insert into stadium_book values(NULL, %s, %s, %s, %s, %s, %s, %s, %s)", [stad, b[0], b[1], date, current_user.username, b[2], b[3], b[4]])
                 mycursor.close()
                 return render(request, 'ticket.html', {"temp2":temp2, "b":b, "date":date, "username":current_user.username})
     return render(request, 'ticket.html')
 
 def payment(request):
     if 'stad' in request.POST:
+        mycursor = connection.cursor()
         global temp2
         temp2 = 1
         global stad
-        stad = int(request.POST['radio'])  
-        return render(request, 'payment.html')
+        stad = int(request.POST['radio'])
+        mycursor.execute("SELECT rent from stadium_stadium where stadium_id = %s", [stad])
+        global Price
+        Price = mycursor.fetchone()[0]
+        mycursor.close()
+        return render(request, 'payment.html', {"Price":Price})
     elif 'tick' in request.POST:
         mycursor = connection.cursor()
         temp2 = 0
@@ -155,7 +165,6 @@ def payment(request):
         if snk!="default":
             mycursor.execute("SELECT price from stadium_snacks where snacks_id = %s", [snk])
             b = mycursor.fetchone()
-            global Price
             Price = 1500 + b[0]
             global snacks
             snacks = int(snk)
@@ -170,14 +179,15 @@ def payment(request):
         return render(request, 'payment.html', {"Price":Price})
 
 def seats2(request):
-    results4 = showsnack.objects.all()
+    mycursor = connection.cursor()
+    mycursor.execute("SELECT snacks_id, snacks from stadium_snacks")
+    results4 = mycursor.fetchall()
     if request.method=='POST':
-        mycursor = connection.cursor()
         global match
         match = int(request.POST['radio'])
         mycursor.execute("SELECT S1, S2, S3, S4, S5, S6, S7, S8, S9, S10 from stadium_seats where match_id = %s;", [match])
-        b = mycursor.fetchall()[0]
-        if len(b)!=0:
+        b = mycursor.fetchone()
+        if b:
             mycursor.close()
             return render(request, 'seats2.html', {"b":b, "results4":results4})
         else:
@@ -266,21 +276,20 @@ def seats(request):
             return render(request, 'seats.html', {"b":b})
         
 def search(request):
-    results = showcity.objects.all().values_list('city', flat=True).distinct()
-    results2 = showmatch.objects.all()
-    results3 = showmatch.objects.all().values_list('game', flat = True).distinct()
+    results = stadium.objects.all().values_list('city', flat=True).distinct()
+    results3 = stadium.objects.all().values_list('game', flat = True).distinct()
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username = username, password = password)
         if user is not None:
             auth.login(request, user)
-            return render(request, 'search.html', {"results":results, "results2":results2, "results3":results3})
+            return render(request, 'search.html', {"results":results, "results3":results3})
         else:
             messages.info(request, 'Invalid credentials')
             return redirect('/login/')
     else:
-        return render(request, 'search.html', {"results":results, "results2":results2, "results3":results3})
+        return render(request, 'search.html', {"results":results, "results3":results3})
 def register1(request):
     return render(request, 'registration1.html')
 
@@ -332,6 +341,7 @@ def account(request):
     b = mycursor.fetchall()
     mycursor.execute("SELECT * from stadium_book where username = %s", [username])
     c = mycursor.fetchall()
+    print(c)
     mycursor.close()
     return render(request, 'account.html', {"name":name, "username":username, "email":email, "b":b, "c":c})
 
